@@ -340,7 +340,7 @@ body {
     color: aliceblue;
     font-size: 20px;
     line-height: 1.4;
-    margin-bottom: 4rem;
+    margin-bottom: 9rem;
     text-align: center;
     
     
@@ -349,7 +349,7 @@ body {
         font-size: 60px;
         line-height: 1;
         text-align: center;
-        margin-top: 20px;
+        margin-top: 90px;
         
     
     }
@@ -442,7 +442,7 @@ section{
     line-height: 1;
     text-align: center;
     margin-right:-800px;
-    margin-top: 30px;
+    margin-top: -175px;
 
 }
 
@@ -476,18 +476,17 @@ color: #0ef;
 
 /* Center the skills section */
 .skills-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;  /* Centers vertically */
-    text-align: center;
-    height: 100vh;  /* Full viewport height to center it */
-    padding: 50px 20px;
-    margin: 0; /* Remove any extra margins */
-    transition: background 0.5s ease-in-out;
-    
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-top: 100px;   /* 👈 Enough to clear header */
+  padding-bottom: 100px;
+  margin: 0;
+  transition: background 0.5s ease-in-out;
+  position: relative;
+  min-height: 100vh;    /* 👈 Only minimum height, not fixed 160vh */
 }
-
 
 
 /* Skill bars zoom effect */
@@ -586,8 +585,8 @@ color: #0ef;
     align-items: center;
     justify-content: center;
     text-align: center;
-    height: 100vh;
-    padding: 50px 20px;
+    height: 150vh;
+    padding: 90px 20px;
     margin: 0;
     transition: background 0.5s ease-in-out;
     position: relative;
@@ -1041,4 +1040,117 @@ html {
         transform: translateY(0px);
         opacity: 1;
     }
+}
+
+
+
+
+/* ===== Portfolio Enhancements ===== */
+.main-text {
+  padding-top: 50px;
+  margin-top: 70px;
+  
+}
+
+.main-text h2 {
+  font-size: 60px;
+  line-height: 1;
+  text-align: center;
+  color: #fff;
+  
+}
+
+.main-text h2 span {
+  color: #0ef;
+}
+
+.project-title {
+  font-size: 60px;
+  color: #fff;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  margin-left: 500px;
+}
+
+.project-title span {
+  color: #0ef;
+}
+
+.portfolio-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 40px;
+  justify-items: center;
+  padding: 0 20px;
+  max-width: 1200px;
+  margin: 0 auto 100px;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.02);
+  padding: 20px;
+  border-radius: 10px;
+  transition: transform 0.3s, background 0.3s;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.row:hover {
+  transform: translateY(-5px);
+  background: rgba(0, 255, 255, 0.05); /* Light overlay instead of blur */
+}
+
+.row img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  transition: transform 0.3s ease;
+}
+
+.layer {
+  text-align: center;
+}
+
+.layer h5 {
+  font-size: 22px;
+  margin-bottom: 10px;
+  color: rgb(77, 5, 132); /* Darker header color */
+}
+
+.layer p {
+  font-size: 16px;
+  color: #013253; /* Slightly lighter than header */
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
+
+.layer a {
+  font-size: 20px;
+  color: #0ef;
+  text-decoration: none;
+}
+
+.layer a:hover {
+  color: #fff;
+  text-shadow: 0 0 10px rgb(89, 0, 255);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .portfolio-content {
+    grid-template-columns: 1fr;
+    padding: 0 10px;
+  }
+
+  .row img {
+    max-height: 200px;
+  }
 }
