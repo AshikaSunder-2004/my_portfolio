@@ -1,66 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
-    <link rel="stylesheet" href="stylesheet.css">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Ashika Sunder – Services: Full-Stack Development, AI/ML Solutions, UI/UX Design, and Generative AI integration."/>
+  <title>Services | Ashika Sunder</title>
+  <link rel="stylesheet" href="stylesheet.css"/>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
-    <header class="header">
-        <a href="#" class="logo">Portfolio</a>
 
-        <nav class="navbar">
-            <a href="index.html" style="--i:1" class="active" >Home</a>
-            <a href="about.html" style="--i:2">About</a>
-            <a href="skill.html" style="--i:3">Skills</a>
-            <a href="project.html" style="--i:5">Projects</a>
-            <a href="internship.html" style="--i:5">Internship</a>
-            <a href="services.html" style="--i:4">Services</a>
-            <a href="contact.html" style="--i:5">Contact</a>
+  <header class="header">
+    <a href="index.html" class="logo">Ashika Sunder</a>
+    <nav class="navbar">
+      <a href="index.html" style="--i:1">Home</a>
+      <a href="about.html" style="--i:2">About</a>
+      <a href="skill.html" style="--i:3">Skills</a>
+      <a href="project.html" style="--i:4">Projects</a>
+      <a href="internship.html" style="--i:5">Experience</a>
+      <a href="certifications.html" style="--i:6">Certifications</a>
+      <a href="services.html" class="active" style="--i:7">Services</a>
+      <a href="contact.html" style="--i:8">Contact</a>
+    </nav>
+  </header>
 
-        </nav> 
-       </header>
+  <section class="services-section">
+    <div class="section-header">
+      <h1>My <span>Services</span></h1>
+      <p>What I bring to the table — from idea to production</p>
+    </div>
 
+    <div class="services-grid">
 
-       <section>
-        <div class="services" id="services">
-            <div class="container3">
-                <h1 class="sub-title2">My <span>Services</span></h1>
-           <div class="services-list">
-            <div>
-                <i class='bx bx-code' style='color:#ab64ec'  ></i>
-                <h2>UI/UX Design</h2>
-               <p>I craft intuitive and visually appealing user interfaces that enhance user experience. 
-                My designs focus on functionality, aesthetics, and user-centered principles to create seamless digital interactions. 
-                From wireframing to prototyping, I ensure every element aligns with the brand’s identity and user needs.</p> 
-            <a href="#" class="read" >Learn More</a>
-            </div><br>
-    
-            <div>
-                <i class='bx bx-crop' style='color:#ab64ec' ></i>
-                <h2>Mern-Stack</h2>
-               <p>I specialize in building scalable, high-performance web applications using the MERN Stack (MongoDB, Express.js, React.js, and Node.js). Whether you need a custom web app, API development, or a full-stack solution, I deliver modern, user-friendly applications tailored to your needs.</p> 
-            <a href="#" class="read" >Learn More</a>
-            </div><br>
-    
-            <div>
-                <i class='bx bxl-apple' style='color:#ab64ec'  ></i>
-                <h2>Machine Learning</h2>
-               <p>I provide custom Machine Learning solutions that turn data into actionable insights. Whether you need predictive analytics, AI-powered automation, or deep learning models, I build intelligent systems that drive innovation and efficiency.Supervised & Unsupervised Learning – Classification, clustering, regression.
-                </p> 
-            <a href="#" class="read" >Learn More</a>
-            </div>
-           </div>
-           
-            </div>
-        </div>
-    </section>
+      <div class="service-card">
+        <i class='bx bx-layer service-icon'></i>
+        <h2>Full-Stack Development</h2>
+        <p>Building scalable, high-performance web applications using MERN, Next.js, FastAPI, and PostgreSQL. From UI to backend APIs, I deliver complete end-to-end solutions tailored to your needs.</p>
+        <a href="contact.html" class="read">Get Started <i class='bx bx-right-arrow-alt'></i></a>
+      </div>
 
-    <script src="main.js"></script>
+      <div class="service-card">
+        <i class='bx bx-brain service-icon'></i>
+        <h2>AI &amp; ML Solutions</h2>
+        <p>Custom machine learning models, Generative AI integrations, RAG pipelines, and intelligent automation. I turn your data into actionable insights using TensorFlow, scikit-learn, and LLMs.</p>
+        <a href="contact.html" class="read">Get Started <i class='bx bx-right-arrow-alt'></i></a>
+      </div>
+
+      <div class="service-card">
+        <i class='bx bx-palette service-icon'></i>
+        <h2>UI/UX Design</h2>
+        <p>Intuitive, visually stunning interfaces that enhance user experience. From wireframes to pixel-perfect prototypes, I ensure every interaction feels seamless and purposeful.</p>
+        <a href="contact.html" class="read">Get Started <i class='bx bx-right-arrow-alt'></i></a>
+      </div>
+
+      <div class="service-card">
+        <i class='bx bx-bot service-icon'></i>
+        <h2>Generative AI Integration</h2>
+        <p>Integrate powerful LLMs (Gemini, GPT) into your products. AI chatbots, resume analyzers, study plan generators, and content pipelines — all connected to your existing infrastructure.</p>
+        <a href="contact.html" class="read">Get Started <i class='bx bx-right-arrow-alt'></i></a>
+      </div>
+
+      <div class="service-card">
+        <i class='bx bx-data service-icon'></i>
+        <h2>Database &amp; API Design</h2>
+        <p>Efficient database architecture with MongoDB and PostgreSQL. RESTful and async API development with FastAPI and Express.js. Optimized for scale, security, and performance.</p>
+        <a href="contact.html" class="read">Get Started <i class='bx bx-right-arrow-alt'></i></a>
+      </div>
+
+      <div class="service-card">
+        <i class='bx bx-line-chart service-icon'></i>
+        <h2>Data Analysis &amp; Visualization</h2>
+        <p>Transform raw datasets into insights with Python, Pandas, and Streamlit. Interactive dashboards, statistical analysis, and predictive models that help you make data-driven decisions.</p>
+        <a href="contact.html" class="read">Get Started <i class='bx bx-right-arrow-alt'></i></a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div class="last-text">
+    <p class="footer">Developed with ❤️ by Ashika Sunder © 2026</p>
+  </div>
+  <a href="#" class="top"><i class='bx bx-up-arrow-alt'></i></a>
+
 </body>
 </html>
-    
-    
