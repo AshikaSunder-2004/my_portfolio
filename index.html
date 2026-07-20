@@ -3,97 +3,1218 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Ashika Sunder – B.Tech AI & Data Science student, Full-Stack Developer & AI Enthusiast. Portfolio showcasing projects, internships and skills."/>
+  <meta name="description" content="Ashika Sunder – B.Tech AI & Data Science student, Full-Stack Developer & AI Enthusiast. Portfolio showcasing projects, internships, skills and achievements."/>
   <title>Ashika Sunder | AI & Full-Stack Developer Portfolio</title>
   <link rel="stylesheet" href="stylesheet.css" />
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
   <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <style>
+    /* ── Single-page scroll reset ── */
+    html { scroll-behavior: smooth; }
+
+    /* ── THREE.js canvas ── */
+    #three-bg {
+      position: fixed; top:0; left:0;
+      width:100%; height:100%;
+      z-index:0; pointer-events:none;
+    }
+
+    /* ── All sections sit above canvas ── */
+    .hero, .about, .skills-section, .projects-section,
+    .internship-section, .certifications-section,
+    .achievements-section, .services-section,
+    .contact-section, .education-section { position: relative; z-index: 1; }
+
+    /* ═══════════════ HERO ═══════════════ */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      align-items: center;
+      padding: 120px 8% 80px;
+      gap: 60px;
+    }
+    .hero-content {}
+    .hero-content h3.greeting {
+      font-size: 22px; font-weight: 500;
+      color: var(--text-muted); letter-spacing: 1px;
+      opacity: 0; animation: slideBottom 1s ease forwards;
+    }
+    .hero-content h1 {
+      font-size: clamp(42px,6vw,72px); font-weight: 800; margin: 10px 0 6px;
+      background: linear-gradient(135deg, #fff 30%, var(--purple));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      line-height: 1.1;
+      opacity: 0; animation: slideRight 0.8s ease forwards 0.4s;
+    }
+    .hero-content h3.role {
+      font-size: 24px; font-weight: 600; color: #fff; margin-bottom: 6px;
+      opacity: 0; animation: slideTop 1s ease forwards 0.7s;
+    }
+    .hero-content h3.role span { color: var(--cyan); font-weight: 700; }
+    .hero-content p {
+      font-size: 17px; color: var(--text-muted); line-height: 1.8;
+      max-width: 560px; margin: 18px 0 30px;
+      opacity: 0; animation: slideLeft 1s ease forwards 0.9s;
+    }
+    .hero-social {
+      display: flex; gap: 12px; margin-bottom: 32px;
+      opacity: 0; animation: slideLeft 1s ease forwards 1.1s;
+    }
+    .hero-social a {
+      width: 46px; height: 46px; display: inline-flex; align-items: center; justify-content: center;
+      background: var(--glass); border: 1px solid var(--border); border-radius: 50%;
+      font-size: 22px; color: var(--cyan); text-decoration: none; transition: all 0.3s;
+    }
+    .hero-social a:hover {
+      background: var(--cyan); color: #081b29;
+      box-shadow: 0 0 25px var(--cyan); transform: translateY(-3px) scale(1.1);
+    }
+    .hero-btns {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      opacity: 0; animation: slideTop 1s ease forwards 1.3s;
+    }
+    /* Profile image on right */
+    .hero-img-wrap {
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; animation: fadeIn 1.2s ease forwards 0.6s;
+    }
+    .hero-img-ring {
+      position: relative; width: 360px; height: 360px;
+    }
+    .hero-img-ring::before {
+      content: '';
+      position: absolute; inset: -4px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, var(--cyan), var(--purple), var(--cyan));
+      animation: spin 8s linear infinite;
+      z-index: 0;
+    }
+    .hero-img-ring::after {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(14,239,255,0.18), transparent 70%);
+      animation: pulse 4s infinite alternate;
+      z-index: 0;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .hero-img-ring img {
+      width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
+      border: 5px solid var(--dark-bg);
+      position: relative; z-index: 1;
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
+    }
+    .hero-img-ring img:hover {
+      transform: scale(1.04);
+      box-shadow: 0 0 50px rgba(14,239,255,0.35);
+    }
+
+    /* ═══════════════ SECTION DIVIDER ═══════════════ */
+    .section-divider {
+      width: 80px; height: 3px;
+      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      border-radius: 2px; margin: 16px auto 0;
+    }
+
+    /* ═══════════════ ABOUT ═══════════════ */
+    .about {
+      padding: 100px 8% 80px;
+      display: block;
+    }
+    .about-inner {
+      max-width: 1000px; margin: 0 auto;
+    }
+    .about-inner .section-header { padding: 0 0 50px; }
+    .about-desc {
+      font-size: 17px; color: var(--text-muted); line-height: 1.9;
+      margin-bottom: 20px;
+    }
+    .about-desc strong { color: #fff; }
+    .about-highlights {
+      list-style: none; margin: 24px 0 36px; display: flex; flex-direction: column; gap: 12px;
+    }
+    .about-highlights li {
+      display: flex; align-items: flex-start; gap: 14px;
+      color: var(--text-muted); font-size: 15px; line-height: 1.6;
+      padding: 14px 18px;
+      background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px;
+      transition: all 0.3s;
+    }
+    .about-highlights li:hover {
+      border-color: rgba(14,239,255,0.4); color: #fff;
+      background: var(--glass); transform: translateX(6px);
+    }
+    .about-highlights li i {
+      font-size: 20px; color: var(--cyan); flex-shrink: 0; margin-top: 2px;
+    }
+    .about-info-grid { margin-bottom: 36px; }
+
+    /* Education cards */
+    .education-section {
+      padding: 0 8% 80px;
+    }
+    .edu-card {
+      background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px;
+      padding: 28px 32px; display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 16px;
+      transition: all 0.3s ease; margin-bottom: 20px;
+    }
+    .edu-card:hover {
+      border-color: rgba(14,239,255,0.4); transform: translateY(-4px);
+      box-shadow: 0 15px 40px rgba(14,239,255,0.08);
+    }
+    .edu-card-left { display: flex; align-items: center; gap: 18px; }
+    .edu-icon {
+      width: 52px; height: 52px; border-radius: 12px; flex-shrink: 0;
+      background: linear-gradient(135deg,rgba(14,239,255,0.15),rgba(138,43,226,0.15));
+      border: 1px solid var(--border); display: flex; align-items: center;
+      justify-content: center; font-size: 26px; color: var(--cyan);
+    }
+    .edu-card h3 { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .edu-card p { font-size: 14px; color: var(--text-muted); }
+    .edu-grade {
+      font-size: 28px; font-weight: 800; text-align: right;
+      background: linear-gradient(135deg,var(--cyan),var(--purple));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .edu-label { font-size: 12px; color: var(--text-muted); text-align: right; text-transform: uppercase; letter-spacing: 1px; }
+
+    /* ═══════════════ SKILLS ═══════════════ */
+    .skills-section { padding: 100px 8% 80px; }
+
+    /* ═══════════════ PROJECTS ═══════════════ */
+    .projects-section { padding: 100px 8% 80px; }
+
+    /* 3D card tilt */
+    .project-card {
+      transform-style: preserve-3d;
+      cursor: pointer;
+    }
+    .project-card::after {
+      content: ''; position: absolute; inset: 0; border-radius: 16px;
+      background: linear-gradient(135deg, rgba(14,239,255,0.06) 0%, rgba(138,43,226,0.06) 100%);
+      opacity: 0; transition: opacity 0.3s; pointer-events: none;
+    }
+    .project-card:hover::after { opacity: 1; }
+
+    .featured-badge {
+      position: absolute; top: 14px; right: 14px;
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      color: #fff; font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.5px; padding: 4px 12px;
+      border-radius: 50px; z-index: 2; box-shadow: 0 0 18px rgba(14,239,255,0.4);
+    }
+    .img-wrap { position: relative; overflow: hidden; }
+    .img-overlay {
+      position: absolute; inset: 0;
+      background: rgba(2,11,24,0.55);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .img-overlay i { font-size: 48px; color: #fff; filter: drop-shadow(0 0 12px var(--cyan)); }
+    .project-card:hover .img-overlay { opacity: 1; }
+
+    .card-links { display: flex; gap: 12px; align-items: center; }
+    .project-link-gh {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--text-muted); font-size: 14px; font-weight: 600;
+      text-decoration: none; transition: color 0.3s;
+    }
+    .project-link-gh:hover { color: var(--purple); }
+
+    /* ═══════════════ EXPERIENCE ═══════════════ */
+    .internship-section { padding: 100px 8% 80px; }
+    .hackathon-section { padding: 0 8% 80px; }
+
+    /* Replace hack-icon spans with icon blocks */
+    .hack-icon-wrap {
+      width: 60px; height: 60px; border-radius: 16px; margin: 0 auto 18px;
+      background: linear-gradient(135deg,rgba(14,239,255,0.15),rgba(138,43,226,0.15));
+      border: 1px solid var(--border); display: flex; align-items: center;
+      justify-content: center; font-size: 28px; color: var(--cyan);
+    }
+
+    /* ═══════════════ CERTIFICATIONS ═══════════════ */
+    .certifications-section { padding: 100px 8% 60px; }
+    .achievements-section { padding: 20px 8% 80px; }
+    .achievement-icon-wrap {
+      width: 64px; height: 64px; border-radius: 16px; margin: 0 auto 18px;
+      background: linear-gradient(135deg,rgba(14,239,255,0.15),rgba(138,43,226,0.15));
+      border: 1px solid var(--border); display: flex; align-items: center;
+      justify-content: center; font-size: 30px; color: var(--cyan);
+    }
+
+    /* ═══════════════ SERVICES ═══════════════ */
+    .services-section { padding: 100px 8% 80px; }
+
+    /* ═══════════════ CONTACT ═══════════════ */
+    .contact-section { padding: 100px 8% 60px; }
+
+    /* ═══════════════ FOOTER ═══════════════ */
+    .site-footer {
+      background: rgba(255,255,255,0.02);
+      border-top: 1px solid var(--border);
+      padding: 40px 8%;
+      text-align: center;
+      position: relative; z-index: 1;
+    }
+    .footer-nav { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin-bottom: 24px; }
+    .footer-nav a {
+      font-size: 14px; color: var(--text-muted); text-decoration: none; transition: color 0.3s;
+    }
+    .footer-nav a:hover { color: var(--cyan); }
+    .footer-socials { display: flex; justify-content: center; gap: 14px; margin-bottom: 28px; }
+    .footer-socials a {
+      width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border);
+      background: var(--card-bg); display: flex; align-items: center; justify-content: center;
+      font-size: 18px; color: var(--text-muted); text-decoration: none; transition: all 0.3s;
+    }
+    .footer-socials a:hover { background: var(--cyan); color: #000; border-color: var(--cyan); box-shadow: 0 0 20px var(--cyan); }
+    .footer-copy { font-size: 14px; color: var(--text-muted); }
+    .footer-copy i { color: var(--cyan); vertical-align: middle; font-size: 15px; }
+
+    /* ═══════════════ RESPONSIVE ═══════════════ */
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; text-align: center; }
+      .hero-img-wrap { order: -1; justify-content: center; }
+      .hero-img-ring { width: 260px; height: 260px; }
+      .hero-social { justify-content: center; }
+      .hero-btns { justify-content: center; }
+      .hero-content p { margin-left: auto; margin-right: auto; }
+    }
+    @media (max-width: 768px) {
+      .hero { padding: 120px 5% 60px; }
+      .hero-img-ring { width: 200px; height: 200px; }
+    }
+
+    /* ═══════════════ SCROLL REVEAL ═══════════════ */
+    .reveal {
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* Sticky nav active highlight on scroll */
+    .navbar a.scroll-active { color: var(--cyan); }
+    .navbar a.scroll-active::after { width: 100%; }
+
+    /* Skill tags – icon-based, no emoji */
+    .skill-tag { display: inline-flex; align-items: center; gap: 6px; }
+    .tech-tag { display: flex; align-items: center; gap: 6px; }
+  </style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header class="header">
-    <a href="index.html" class="logo">Ashika Sunder</a>
-    <nav class="navbar">
-      <a href="index.html" class="active" style="--i:1">Home</a>
-      <a href="about.html" style="--i:2">About</a>
-      <a href="skill.html" style="--i:3">Skills</a>
-      <a href="project.html" style="--i:4">Projects</a>
-      <a href="internship.html" style="--i:5">Experience</a>
-      <a href="certifications.html" style="--i:6">Certifications</a>
-      <a href="services.html" style="--i:7">Services</a>
-      <a href="contact.html" style="--i:8">Contact</a>
+  <!-- 3D Background -->
+  <canvas id="three-bg"></canvas>
+
+  <!-- ═══════════ HEADER ═══════════ -->
+  <header class="header" id="top">
+    <a href="#home" class="logo">Ashika Sunder</a>
+    <nav class="navbar" id="main-nav">
+      <a href="#home"            data-section="home"            style="--i:1">Home</a>
+      <a href="#about"           data-section="about"           style="--i:2">About</a>
+      <a href="#skills"          data-section="skills"          style="--i:3">Skills</a>
+      <a href="#projects"        data-section="projects"        style="--i:4">Projects</a>
+      <a href="#experience"      data-section="experience"      style="--i:5">Experience</a>
+      <a href="#certifications"  data-section="certifications"  style="--i:6">Certifications</a>
+      <a href="#services"        data-section="services"        style="--i:7">Services</a>
+      <a href="#contact"         data-section="contact"         style="--i:8">Contact</a>
     </nav>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <i class='bx bx-menu'></i>
+    </button>
   </header>
 
-  <!-- Home Section -->
-  <section class="home">
-    <div class="home-content">
-      <h3>Hello, It's Me</h3>
+  <!-- ════════════════════════════════════
+       SECTION 1 — HERO
+  ════════════════════════════════════ -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h3 class="greeting">Hello, It's Me</h3>
       <h1>Ashika Sunder</h1>
-      <h3>And I'm a <span class="text"></span></h3>
-      <p>
-        B.Tech (Hons) student specializing in Artificial Intelligence &amp; Data Science.<br>
-        Passionate about full-stack development, Generative AI, and building impactful software.
-      </p>
+      <h3 class="role">And I'm a <span class="text"></span></h3>
+      <p>B.Tech (Hons) student specializing in Artificial Intelligence &amp; Data Science at KGiSL Institute of Technology. Passionate about full-stack development, Generative AI, and building impactful software.</p>
 
-      <div class="home-sci">
+      <div class="hero-social">
         <a href="https://www.linkedin.com/in/ashika-sunder-356177259/" target="_blank" title="LinkedIn"><i class='bx bxl-linkedin'></i></a>
         <a href="https://github.com/AshikaSunder-2004" target="_blank" title="GitHub"><i class='bx bxl-github'></i></a>
         <a href="mailto:ashikasunder.offl@gmail.com" title="Email"><i class='bx bxs-envelope'></i></a>
         <a href="tel:+919345617805" title="Phone"><i class='bx bxs-phone'></i></a>
       </div>
 
-      <a href="https://drive.google.com/drive/folders/1R0CTkexGuQ66ji6v_5gTic7E2vq4KVy0" target="_blank" class="btn-box">
-        <i class='bx bx-download'></i> Download Resume
-      </a>
-    </div>
-    <span class="home-imgHover"></span>
-  </section>
-
-  <!-- Contact Footer Inline -->
-  <section class="contact" id="contact" style="padding: 80px 8%; margin-top:0;">
-    <div class="contact-text">
-      <h2>Let's <span>Connect</span></h2>
-      <h4>Open to Opportunities</h4>
-      <p>Looking for collaborations, internships, or just a tech conversation? Feel free to reach out!</p>
-      <ul class="contact-list">
-        <li><i class='bx bxs-send'></i> <a href="mailto:ashikasunder.offl@gmail.com">ashikasunder.offl@gmail.com</a></li>
-        <li><i class='bx bxs-phone'></i> <a href="tel:+919345617805">+91 9345617805</a></li>
-      </ul>
-      <div class="contact-icons">
-        <a href="https://www.linkedin.com/in/ashika-sunder-356177259/" target="_blank" title="LinkedIn"><i class='bx bxl-linkedin'></i></a>
-        <a href="https://github.com/AshikaSunder-2004" target="_blank" title="GitHub"><i class='bx bxl-github'></i></a>
-        <a href="mailto:ashikasunder.offl@gmail.com" title="Email"><i class='bx bxl-gmail'></i></a>
+      <div class="hero-btns">
+        <a href="#projects" class="btn-box">
+          <i class='bx bx-code-alt'></i> View Projects
+        </a>
+        <a href="https://drive.google.com/drive/folders/1R0CTkexGuQ66ji6v_5gTic7E2vq4KVy0" target="_blank" class="btn-box" style="background: transparent; border: 2px solid var(--cyan); color: var(--cyan); box-shadow: none;">
+          <i class='bx bx-download'></i> Resume
+        </a>
       </div>
     </div>
 
-    <div class="contact-form">
-      <form action="">
-        <input type="text" placeholder="Your Name" required />
-        <input type="email" placeholder="Your Email" required />
-        <input type="text" placeholder="Subject" />
-        <textarea rows="8" placeholder="Your Message" required></textarea>
-        <input type="submit" value="Send Message" class="send" />
-      </form>
+    <!-- Profile image – right side -->
+    <div class="hero-img-wrap">
+      <div class="hero-img-ring">
+        <img src="images/ashi ai.jpeg" alt="Ashika Sunder" onerror="this.style.display='none'" />
+      </div>
     </div>
   </section>
 
-  <!-- Footer -->
-  <div class="last-text">
-    <p class="footer">Developed with ❤️ by Ashika Sunder © 2026</p>
-  </div>
-  <a href="#" class="top"><i class='bx bx-up-arrow-alt'></i></a>
+  <!-- ════════════════════════════════════
+       SECTION 2 — ABOUT
+  ════════════════════════════════════ -->
+  <section class="about" id="about">
+    <div class="about-inner">
+      <div class="section-header reveal">
+        <h1>About <span>Me</span></h1>
+        <div class="section-divider"></div>
+        <p>AI & Data Science Student | Full-Stack Developer</p>
+      </div>
 
-  <!-- Typed.js Script -->
+      <div class="about-info-grid reveal">
+        <div class="about-info-card">
+          <span class="number">3+</span>
+          <span class="label">Internships</span>
+        </div>
+        <div class="about-info-card">
+          <span class="number">7+</span>
+          <span class="label">Projects</span>
+        </div>
+        <div class="about-info-card">
+          <span class="number">6+</span>
+          <span class="label">Certifications</span>
+        </div>
+      </div>
+
+      <p class="about-desc reveal">
+        Hello! I'm <strong>Ashika Sunder</strong>, a B.Tech (Hons) student specializing in Artificial Intelligence &amp; Data Science
+        at KGiSL Institute of Technology, Coimbatore (CGPA: 8.1/10, Batch 2022–2026).
+        I'm passionate about building impactful applications that blend cutting-edge AI with seamless user experiences.
+      </p>
+      <p class="about-desc reveal">
+        Currently interning as a Software Developer at <strong>Spyyda Tech Solutions</strong>, where I build full-stack platforms
+        powered by Next.js, FastAPI, PostgreSQL, and Generative AI. I have hands-on experience with MERN stack, RAG pipelines,
+        Celery task queues, and multi-tenant architectures.
+      </p>
+
+      <ul class="about-highlights reveal">
+        <li><i class='bx bx-medal'></i> 2nd Prize – IoT Train Accident Prevention, Science Expo</li>
+        <li><i class='bx bx-trophy'></i> 4th Prize – SIH Thiruvizha, KGiSL Institute of Technology</li>
+        <li><i class='bx bx-file'></i> Presented Research Paper – IDEATRIX 2025</li>
+        <li><i class='bx bx-bot'></i> Built Interview Copilot – AI-powered interview prep platform</li>
+        <li><i class='bx bx-cloud'></i> Certified in AWS Cloud, Microsoft SQL, Oracle, Linux &amp; Gen AI</li>
+      </ul>
+
+      <div style="text-align:center; margin-top:10px;" class="reveal">
+        <a href="#projects" class="btn-box"><i class='bx bx-code-alt'></i> Explore My Projects</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Education -->
+  <section class="education-section" id="education">
+    <div style="max-width:900px; margin:0 auto;">
+      <div class="section-header reveal" style="text-align:center; padding: 0 0 40px;">
+        <h1>My <span>Education</span></h1>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="edu-card reveal">
+        <div class="edu-card-left">
+          <div class="edu-icon"><i class='bx bxs-graduation'></i></div>
+          <div>
+            <h3>B.Tech (Hons) – AI &amp; Data Science</h3>
+            <p>KGiSL Institute of Technology, Coimbatore</p>
+            <p>2022 – 2026</p>
+          </div>
+        </div>
+        <div>
+          <div class="edu-grade">8.1</div>
+          <div class="edu-label">CGPA / 10</div>
+        </div>
+      </div>
+
+      <div class="edu-card reveal">
+        <div class="edu-card-left">
+          <div class="edu-icon"><i class='bx bx-book-open'></i></div>
+          <div>
+            <h3>Higher Secondary (XII)</h3>
+            <p>Sri Ranganathar MHSS, Coimbatore</p>
+            <p>2022</p>
+          </div>
+        </div>
+        <div>
+          <div class="edu-grade">90.16%</div>
+        </div>
+      </div>
+
+      <div class="edu-card reveal">
+        <div class="edu-card-left">
+          <div class="edu-icon"><i class='bx bx-buildings'></i></div>
+          <div>
+            <h3>Secondary (X)</h3>
+            <p>Sri Ranganathar MHSS, Coimbatore</p>
+            <p>2020</p>
+          </div>
+        </div>
+        <div>
+          <div class="edu-grade">84.8%</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════
+       SECTION 3 — SKILLS
+  ════════════════════════════════════ -->
+  <section class="skills-section" id="skills">
+    <div class="section-header reveal">
+      <h1>My <span>Skills</span></h1>
+      <div class="section-divider"></div>
+      <p>Technologies I've worked with across full-stack, AI/ML and cloud</p>
+    </div>
+
+    <div class="skills-grid">
+      <!-- Technical Skills -->
+      <div class="skills-column reveal">
+        <h2><span>Technical</span> Skills</h2>
+
+        <div class="bar">
+          <div class="info-row"><span class="skill-name"><i class='bx bxl-html5' style="color:#e44d26;"></i> HTML / CSS</span><span class="pct">90%</span></div>
+          <div class="progress-line"><span style="width:90%"></span></div>
+        </div>
+        <div class="bar">
+          <div class="info-row"><span class="skill-name"><i class='bx bxl-javascript' style="color:#f0db4f;"></i> JavaScript</span><span class="pct">82%</span></div>
+          <div class="progress-line"><span style="width:82%"></span></div>
+        </div>
+        <div class="bar">
+          <div class="info-row"><span class="skill-name"><i class='bx bxl-react' style="color:#61dbfb;"></i> React.js</span><span class="pct">85%</span></div>
+          <div class="progress-line"><span style="width:85%"></span></div>
+        </div>
+        <div class="bar">
+          <div class="info-row"><span class="skill-name"><i class='bx bx-server' style="color:#fff;"></i> Next.js</span><span class="pct">80%</span></div>
+          <div class="progress-line"><span style="width:80%"></span></div>
+        </div>
+        <div class="bar">
+          <div class="info-row"><span class="skill-name"><i class='bx bxl-python' style="color:#3572A5;"></i> Python / FastAPI</span><span class="pct">88%</span></div>
+          <div class="progress-line"><span style="width:88%"></span></div>
+        </div>
+        <div class="bar">
+          <div class="info-row"><span class="skill-name"><i class='bx bxl-nodejs' style="color:#68a063;"></i> Node.js / Express</span><span class="pct">80%</span></div>
+          <div class="progress-line"><span style="width:80%"></span></div>
+        </div>
+        <div class="bar">
+          <div class="info-row"><span class="skill-name"><i class='bx bx-data' style="color:#4db33d;"></i> MongoDB / PostgreSQL</span><span class="pct">82%</span></div>
+          <div class="progress-line"><span style="width:82%"></span></div>
+        </div>
+        <div class="bar">
+          <div class="info-row"><span class="skill-name"><i class='bx bx-brain' style="color:#9b59b6;"></i> ML / TensorFlow</span><span class="pct">78%</span></div>
+          <div class="progress-line"><span style="width:78%"></span></div>
+        </div>
+        <div class="bar">
+          <div class="info-row"><span class="skill-name"><i class='bx bxl-java' style="color:#f89820;"></i> Java</span><span class="pct">75%</span></div>
+          <div class="progress-line"><span style="width:75%"></span></div>
+        </div>
+      </div>
+
+      <!-- Soft Skills & Tools -->
+      <div class="skills-column reveal">
+        <h2><span>Soft</span> Skills</h2>
+        <div class="soft-skills-grid">
+          <span class="skill-tag"><i class='bx bx-bulb'></i> Problem Solving</span>
+          <span class="skill-tag"><i class='bx bx-group'></i> Team Collaboration</span>
+          <span class="skill-tag"><i class='bx bx-conversation'></i> Communication</span>
+          <span class="skill-tag"><i class='bx bx-search-alt'></i> Critical Thinking</span>
+          <span class="skill-tag"><i class='bx bx-timer'></i> Time Management</span>
+          <span class="skill-tag"><i class='bx bx-crosshair'></i> Attention to Detail</span>
+          <span class="skill-tag"><i class='bx bx-target-lock'></i> Goal-Oriented</span>
+          <span class="skill-tag"><i class='bx bx-transfer'></i> Adaptability</span>
+          <span class="skill-tag"><i class='bx bx-rocket'></i> Fast Learner</span>
+          <span class="skill-tag"><i class='bx bx-paint'></i> Creative Thinking</span>
+        </div>
+
+        <div style="margin-top:40px;">
+          <h2 style="margin-bottom:20px;"><span>Languages</span></h2>
+          <div class="soft-skills-grid">
+            <span class="skill-tag"><i class='bx bxl-python'></i> Python</span>
+            <span class="skill-tag"><i class='bx bxl-java'></i> Java</span>
+            <span class="skill-tag"><i class='bx bxl-javascript'></i> JavaScript</span>
+            <span class="skill-tag"><i class='bx bx-data'></i> SQL</span>
+            <span class="skill-tag"><i class='bx bx-code'></i> Dart</span>
+          </div>
+        </div>
+
+        <div style="margin-top:36px;">
+          <h2 style="margin-bottom:20px;"><span>Tools</span> &amp; Platforms</h2>
+          <div class="tech-tags">
+            <span class="tech-tag"><i class='bx bxl-git' style="color:#f34f29;"></i> Git</span>
+            <span class="tech-tag"><i class='bx bx-task'></i> Celery</span>
+            <span class="tech-tag"><i class='bx bx-server'></i> Redis</span>
+            <span class="tech-tag"><i class='bx bx-line-chart'></i> Streamlit</span>
+            <span class="tech-tag"><i class='bx bx-data'></i> ChromaDB</span>
+            <span class="tech-tag"><i class='bx bx-bot'></i> Gemini API</span>
+            <span class="tech-tag"><i class='bx bxl-aws'></i> AWS</span>
+            <span class="tech-tag"><i class='bx bxl-docker'></i> Docker</span>
+            <span class="tech-tag"><i class='bx bxl-flutter'></i> Flutter</span>
+          </div>
+        </div>
+
+        <div style="margin-top:36px;">
+          <h2 style="margin-bottom:20px;"><span>AI / ML</span> Stack</h2>
+          <div class="tech-tags">
+            <span class="tech-tag"><i class='bx bx-chip'></i> TensorFlow</span>
+            <span class="tech-tag"><i class='bx bx-scatter-chart'></i> Scikit-learn</span>
+            <span class="tech-tag"><i class='bx bx-brain'></i> Generative AI</span>
+            <span class="tech-tag"><i class='bx bx-search-alt-2'></i> RAG Pipelines</span>
+            <span class="tech-tag"><i class='bx bx-cube'></i> Vector DBs</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════
+       SECTION 4 — PROJECTS
+  ════════════════════════════════════ -->
+  <section class="projects-section" id="projects">
+    <div class="section-header reveal">
+      <h1>Latest <span>Projects</span></h1>
+      <div class="section-divider"></div>
+      <p>A collection of real-world applications built with modern technologies</p>
+    </div>
+
+    <div class="projects-filter reveal">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="ai">AI / Agents</button>
+      <button class="filter-btn" data-filter="fullstack">Full-Stack</button>
+      <button class="filter-btn" data-filter="ml">ML / Data</button>
+      <button class="filter-btn" data-filter="iot">IoT</button>
+    </div>
+
+    <div class="portfolio-content">
+
+      <!-- Enterprise AI Workflow (FEATURED) -->
+      <div class="project-card" data-category="ai" id="enterprise-ai-project">
+        <span class="featured-badge"><i class='bx bx-star'></i> Featured</span>
+        <div class="img-wrap">
+          <img src="images/enterprise_ai_workflow.png" alt="Enterprise AI Workflow Automation Platform"/>
+          <a href="https://enterprise-ai-workflow-automation-p.vercel.app/" target="_blank" rel="noopener" class="img-overlay">
+            <i class='bx bx-play-circle'></i>
+          </a>
+        </div>
+        <div class="card-content">
+          <span class="project-badge"><i class='bx bx-bot'></i> Agentic AI</span>
+          <h3>Enterprise AI Workflow Automation</h3>
+          <p>A production-grade platform where non-technical users design workflows visually (DAG editor) and AI agents autonomously execute them — reasoning, calling tools, self-correcting and escalating to humans. Features ReAct-loop agents, multi-agent handoff, durable state, RBAC and full audit trail.</p>
+          <div class="project-tags">
+            <span>Next.js</span><span>FastAPI</span><span>PostgreSQL</span>
+            <span>Redis</span><span>LLM / ReAct</span><span>Multi-Agent</span><span>RBAC</span><span>WebSocket</span>
+          </div>
+          <div class="card-links">
+            <a href="https://enterprise-ai-workflow-automation-p.vercel.app/" target="_blank" rel="noopener" class="project-link">
+              <i class='bx bx-link-external'></i> Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interview Copilot -->
+      <div class="project-card" data-category="ai" id="interview-copilot-project">
+        <div class="img-wrap">
+          <img src="images/copilot.png" alt="Interview Copilot" onerror="this.src='images/enterprise_ai_workflow.png'"/>
+          <a href="https://interview-copilot-blue.vercel.app/" target="_blank" rel="noopener" class="img-overlay">
+            <i class='bx bx-play-circle'></i>
+          </a>
+        </div>
+        <div class="card-content">
+          <span class="project-badge"><i class='bx bx-brain'></i> AI Platform</span>
+          <h3>Interview Copilot</h3>
+          <p>Multi-tenant AI interview preparation platform with Gemini-powered study plans, resume analysis, secure auth, and token-based access control.</p>
+          <div class="project-tags"><span>Next.js</span><span>FastAPI</span><span>PostgreSQL</span><span>Celery</span><span>Redis</span><span>Gemini API</span></div>
+          <div class="card-links">
+            <a href="https://interview-copilot-blue.vercel.app/" target="_blank" rel="noopener" class="project-link"><i class='bx bx-link-external'></i> Live Demo</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- RAG Chatbot -->
+      <div class="project-card" data-category="ai" id="rag-chatbot-project">
+        <div class="img-wrap">
+          <img src="images/rag.png" alt="RAG Chatbot" onerror="this.src='images/enterprise_ai_workflow.png'"/>
+          <a href="https://rag-website-chatbot-837hhghwwzgkrvfmexmkcy.streamlit.app/" target="_blank" rel="noopener" class="img-overlay">
+            <i class='bx bx-play-circle'></i>
+          </a>
+        </div>
+        <div class="card-content">
+          <span class="project-badge"><i class='bx bx-message-square-dots'></i> Generative AI</span>
+          <h3>RAG AI-Powered Website Chatbot</h3>
+          <p>Intelligent chatbot using semantic search and vector embeddings to enable contextual question answering from website content via ChromaDB and Gemini API.</p>
+          <div class="project-tags"><span>FastAPI</span><span>React.js</span><span>ChromaDB</span><span>Gemini API</span><span>RAG</span></div>
+          <div class="card-links">
+            <a href="https://rag-website-chatbot-837hhghwwzgkrvfmexmkcy.streamlit.app/" target="_blank" rel="noopener" class="project-link"><i class='bx bx-link-external'></i> Live Demo</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Forensic Platform -->
+      <div class="project-card" data-category="fullstack" id="forensic-platform-project">
+        <div class="img-wrap">
+          <img src="images/forensic AI screenshot.png" alt="Forensic Analysis Platform" onerror="this.src='images/enterprise_ai_workflow.png'"/>
+          <div class="img-overlay"><i class='bx bx-code-block'></i></div>
+        </div>
+        <div class="card-content">
+          <span class="project-badge"><i class='bx bx-shield-quarter'></i> Full-Stack</span>
+          <h3>Forensic Analysis Platform</h3>
+          <p>Digital evidence analysis platform using Django and React. Applies ML techniques for evidence classification with dashboards for case management.</p>
+          <div class="project-tags"><span>Django</span><span>React.js</span><span>Machine Learning</span><span>PostgreSQL</span></div>
+          <div class="card-links"><a href="#" class="project-link"><i class='bx bx-link-external'></i> View Project</a></div>
+        </div>
+      </div>
+
+      <!-- RESQ -->
+      <div class="project-card" data-category="fullstack" id="resq-app-project">
+        <div class="img-wrap">
+          <img src="images/resq.png" alt="RESQ App" onerror="this.src='images/enterprise_ai_workflow.png'"/>
+          <div class="img-overlay"><i class='bx bx-code-block'></i></div>
+        </div>
+        <div class="card-content">
+          <span class="project-badge"><i class='bx bx-layer'></i> MERN Stack</span>
+          <h3>RESQ – Lost &amp; Found Platform</h3>
+          <p>AI-powered lost &amp; found platform using image recognition, geolocation alerts, and secure real-time chat to reunite people with their belongings.</p>
+          <div class="project-tags"><span>React.js</span><span>Node.js</span><span>MongoDB</span><span>Image Recognition</span></div>
+          <div class="card-links"><a href="#" class="project-link"><i class='bx bx-link-external'></i> View Project</a></div>
+        </div>
+      </div>
+
+      <!-- Salary Predictor -->
+      <div class="project-card" data-category="ml" id="salary-predictor-project">
+        <div class="img-wrap">
+          <img src="images/salary.png" alt="Salary Predictor ML" onerror="this.src='images/enterprise_ai_workflow.png'"/>
+          <div class="img-overlay"><i class='bx bx-bar-chart-alt-2'></i></div>
+        </div>
+        <div class="card-content">
+          <span class="project-badge"><i class='bx bx-scatter-chart'></i> Machine Learning</span>
+          <h3>Employee Salary Predictor</h3>
+          <p>Regression-based ML model for employee salary prediction. Interactive dashboard built with Streamlit with data visualizations and model evaluation.</p>
+          <div class="project-tags"><span>Python</span><span>Scikit-learn</span><span>Streamlit</span><span>Pandas</span></div>
+          <div class="card-links"><a href="#" class="project-link"><i class='bx bx-link-external'></i> View Project</a></div>
+        </div>
+      </div>
+
+      <!-- Train Safety -->
+      <div class="project-card" data-category="iot" id="train-safety-project">
+        <div class="img-wrap">
+          <img src="images/train.png" alt="Train Safety IoT" onerror="this.src='images/enterprise_ai_workflow.png'"/>
+          <div class="img-overlay"><i class='bx bx-chip'></i></div>
+        </div>
+        <div class="card-content">
+          <span class="project-badge"><i class='bx bx-chip'></i> IoT &amp; Embedded</span>
+          <h3>Smart Train Alert System</h3>
+          <p>Arduino + ultrasonic sensor system to prevent train collisions at crossings. Won 2nd Prize at Science Expo for this IoT innovation.</p>
+          <div class="project-tags"><span>Arduino</span><span>IoT</span><span>C/C++</span><span>Ultrasonic Sensor</span></div>
+          <div class="card-links"><a href="#" class="project-link"><i class='bx bx-link-external'></i> View Project</a></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════
+       SECTION 5 — EXPERIENCE
+  ════════════════════════════════════ -->
+  <section class="internship-section" id="experience">
+    <div class="section-header reveal">
+      <h1>Work <span>Experience</span></h1>
+      <div class="section-divider"></div>
+      <p>Professional internships and hands-on industry exposure</p>
+    </div>
+
+    <div class="experience-cards">
+
+      <div class="exp-card reveal">
+        <div class="exp-header">
+          <div class="exp-company">
+            <div class="exp-company-icon"><i class='bx bx-code-block'></i></div>
+            <div class="exp-company-info">
+              <h3>Spyyda Tech Solutions</h3>
+              <span class="role">Software Developer Intern</span>
+            </div>
+          </div>
+          <span class="exp-period">Dec 2025 – May 2026</span>
+        </div>
+        <ul>
+          <li>Developed full-stack applications using Next.js, FastAPI, PostgreSQL, and MongoDB.</li>
+          <li>Built responsive UI modules, authentication systems, and API integrations.</li>
+          <li>Developed AI-powered resume analysis and AI-generated study plans for Interview Copilot platform.</li>
+          <li>Implemented Celery + Redis for background task processing and scalability.</li>
+          <li>Improved application performance through optimized database queries and caching.</li>
+        </ul>
+        <div class="exp-tags"><span>Next.js</span><span>FastAPI</span><span>PostgreSQL</span><span>MongoDB</span><span>Celery</span><span>Redis</span><span>Gemini API</span></div>
+      </div>
+
+      <div class="exp-card reveal">
+        <div class="exp-header">
+          <div class="exp-company">
+            <div class="exp-company-icon"><i class='bx bx-brain'></i></div>
+            <div class="exp-company-info">
+              <h3>IBM SkillsBuild</h3>
+              <span class="role">Data Science Intern</span>
+            </div>
+          </div>
+          <span class="exp-period">Jun 2025 – Jul 2025</span>
+        </div>
+        <ul>
+          <li>Built an Employee Salary Prediction System using Python and Streamlit.</li>
+          <li>Trained and evaluated regression models using cleaned datasets with scikit-learn.</li>
+          <li>Created interactive dashboards and visualizations for data insights.</li>
+          <li>Gained hands-on experience in data science workflows and model deployment.</li>
+        </ul>
+        <div class="exp-tags"><span>Python</span><span>Scikit-learn</span><span>Streamlit</span><span>Pandas</span><span>Data Science</span><span>ML</span></div>
+      </div>
+
+      <div class="exp-card reveal">
+        <div class="exp-header">
+          <div class="exp-company">
+            <div class="exp-company-icon"><i class='bx bxl-python'></i></div>
+            <div class="exp-company-info">
+              <h3>Code Infinite</h3>
+              <span class="role">AI/ML Intern</span>
+            </div>
+          </div>
+          <span class="exp-period">Previous</span>
+        </div>
+        <ul>
+          <li>Developed NetGap – an AI-driven mindset-career classification system.</li>
+          <li>Implemented survey-based AI predictions and dashboard analytics.</li>
+          <li>Built user grouping for personalized career suggestions using ML models.</li>
+        </ul>
+        <div class="exp-tags"><span>Python</span><span>Machine Learning</span><span>AI</span><span>Dashboard</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Hackathons -->
+  <section class="hackathon-section">
+    <div class="section-header reveal" style="padding-top:20px; padding-bottom:40px;">
+      <h1>Hackathons &amp; <span>Achievements</span></h1>
+      <div class="section-divider"></div>
+      <p>Competitions, paper presentations and notable recognition</p>
+    </div>
+    <div class="hackathon-grid">
+
+      <div class="hack-card reveal">
+        <div class="hack-icon-wrap"><i class='bx bx-medal'></i></div>
+        <h3>Science Expo – 2nd Prize</h3>
+        <p>IoT Train Accident Prevention system using Arduino and ultrasonic sensors. Demonstrated real-time collision prevention at railway crossings.</p>
+        <div style="margin-top:14px;"><span class="exp-period">IoT &amp; Embedded Systems</span></div>
+      </div>
+
+      <div class="hack-card reveal">
+        <div class="hack-icon-wrap"><i class='bx bx-trophy'></i></div>
+        <h3>SIH Thiruvizha – 4th Prize</h3>
+        <p>Secured 4th Prize at the Smart India Hackathon Thiruvizha event at KGiSL Institute of Technology for an innovative AI-driven solution.</p>
+        <div style="margin-top:14px;"><span class="exp-period">KGiSL Institute of Technology</span></div>
+      </div>
+
+      <div class="hack-card reveal">
+        <div class="hack-icon-wrap"><i class='bx bx-file'></i></div>
+        <h3>Research Paper – IDEATRIX 2025</h3>
+        <p>Presented a research paper at IDEATRIX 2025, contributing to the academic community with findings in AI and data science domain.</p>
+        <div style="margin-top:14px;"><span class="exp-period">Research &amp; Publication</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════
+       SECTION 6 — CERTIFICATIONS
+  ════════════════════════════════════ -->
+  <section class="certifications-section" id="certifications">
+    <div class="section-header reveal">
+      <h1>My <span>Certifications</span></h1>
+      <div class="section-divider"></div>
+      <p>Industry-recognized credentials across databases, cloud, and AI</p>
+    </div>
+
+    <div class="certs-grid">
+
+      <div class="cert-card reveal">
+        <div class="cert-icon" style="color:#0078D4;"><i class='bx bxl-microsoft'></i></div>
+        <div class="cert-info">
+          <h3>Microsoft SQL Server Certification</h3>
+          <p>Proficiency in SQL Server database management, querying, and optimization techniques.</p>
+          <span class="cert-badge">Microsoft</span>
+        </div>
+      </div>
+
+      <div class="cert-card reveal">
+        <div class="cert-icon" style="color:#F80000;"><i class='bx bx-data'></i></div>
+        <div class="cert-info">
+          <h3>Oracle Foundations Associate</h3>
+          <p>Fundamental knowledge of Oracle Cloud Infrastructure, database concepts, and enterprise solutions.</p>
+          <span class="cert-badge">Oracle</span>
+        </div>
+      </div>
+
+      <div class="cert-card reveal">
+        <div class="cert-icon" style="color:#FFA500;"><i class='bx bx-terminal'></i></div>
+        <div class="cert-info">
+          <h3>Linux Certification</h3>
+          <p>Practical experience with Linux OS, command-line tools, shell scripting, and system administration.</p>
+          <span class="cert-badge">Linux</span>
+        </div>
+      </div>
+
+      <div class="cert-card reveal">
+        <div class="cert-icon" style="color:#00A1F1;"><i class='bx bx-bot'></i></div>
+        <div class="cert-info">
+          <h3>Mastered Gen AI Tools Program</h3>
+          <p>Comprehensive program covering Generative AI tools, prompt engineering, and AI application development.</p>
+          <span class="cert-badge">NGP iTECH</span>
+        </div>
+      </div>
+
+      <div class="cert-card reveal">
+        <div class="cert-icon" style="color:#FF9900;"><i class='bx bxl-aws'></i></div>
+        <div class="cert-info">
+          <h3>AWS Cloud Fundamentals Certification</h3>
+          <p>Core AWS services, cloud architecture principles, security, and deployment strategies on Amazon Web Services.</p>
+          <span class="cert-badge">Amazon Web Services</span>
+        </div>
+      </div>
+
+      <div class="cert-card reveal">
+        <div class="cert-icon" style="color:#00B5E2;"><i class='bx bx-brain'></i></div>
+        <div class="cert-info">
+          <h3>IBM Data Science</h3>
+          <p>Data science methodologies, Python for data analysis, machine learning models, and visualization techniques.</p>
+          <span class="cert-badge">IBM SkillsBuild</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Key Achievements -->
+  <section class="achievements-section" id="achievements">
+    <div class="section-header reveal" style="padding-top:10px; padding-bottom:40px;">
+      <h1>Key <span>Achievements</span></h1>
+      <div class="section-divider"></div>
+      <p>Awards, prizes, and milestones that define my journey</p>
+    </div>
+    <div class="achievements-grid">
+
+      <div class="achievement-card reveal">
+        <div class="achievement-icon-wrap"><i class='bx bx-medal'></i></div>
+        <h3>2nd Prize – IoT Train Accident Prevention</h3>
+        <p>Designed and built an Arduino-based ultrasonic sensor system to prevent train collisions. Recognized at the Science Expo competition.</p>
+        <span class="achievement-rank"><i class='bx bx-trophy'></i> Science Expo</span>
+      </div>
+
+      <div class="achievement-card reveal">
+        <div class="achievement-icon-wrap"><i class='bx bx-trophy'></i></div>
+        <h3>4th Prize – SIH Thiruvizha</h3>
+        <p>Competed at the Smart India Hackathon Thiruvizha held at KGiSL Institute of Technology, delivering an impactful AI-driven solution.</p>
+        <span class="achievement-rank"><i class='bx bx-buildings'></i> KGiSL Institute of Technology</span>
+      </div>
+
+      <div class="achievement-card reveal">
+        <div class="achievement-icon-wrap"><i class='bx bx-file'></i></div>
+        <h3>Research Paper – IDEATRIX 2025</h3>
+        <p>Presented original research at IDEATRIX 2025, contributing insights in AI and Data Science to the academic community.</p>
+        <span class="achievement-rank"><i class='bx bx-book'></i> Research Paper Presentation</span>
+      </div>
+
+      <div class="achievement-card reveal">
+        <div class="achievement-icon-wrap"><i class='bx bx-briefcase'></i></div>
+        <h3>Software Developer Intern – Spyyda Tech</h3>
+        <p>Selected as a Software Developer Intern at Spyyda Tech Solutions, working on production-grade full-stack AI applications.</p>
+        <span class="achievement-rank"><i class='bx bx-bolt-circle'></i> Dec 2025 – May 2026</span>
+      </div>
+
+      <div class="achievement-card reveal">
+        <div class="achievement-icon-wrap"><i class='bx bx-bot'></i></div>
+        <h3>Interview Copilot – AI Platform Built</h3>
+        <p>Successfully built a multi-tenant AI-powered interview preparation platform with Gemini API integration serving real users.</p>
+        <span class="achievement-rank"><i class='bx bx-rocket'></i> Production App</span>
+      </div>
+
+      <div class="achievement-card reveal">
+        <div class="achievement-icon-wrap"><i class='bx bxs-graduation'></i></div>
+        <h3>CGPA 8.1 – B.Tech AI &amp; Data Science</h3>
+        <p>Maintaining a strong academic record of 8.1 CGPA in B.Tech (Hons) Artificial Intelligence &amp; Data Science at KGiSL Institute of Technology.</p>
+        <span class="achievement-rank"><i class='bx bx-bar-chart'></i> Batch 2022–2026</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════
+       SECTION 7 — SERVICES
+  ════════════════════════════════════ -->
+  <section class="services-section" id="services">
+    <div class="section-header reveal">
+      <h1>My <span>Services</span></h1>
+      <div class="section-divider"></div>
+      <p>What I bring to the table — from idea to production</p>
+    </div>
+    <div class="services-grid">
+
+      <div class="service-card reveal">
+        <i class='bx bx-layer service-icon'></i>
+        <h2>Full-Stack Development</h2>
+        <p>Building scalable, high-performance web applications using MERN, Next.js, FastAPI, and PostgreSQL. From UI to backend APIs, I deliver complete end-to-end solutions tailored to your needs.</p>
+        <a href="#contact" class="read">Get Started <i class='bx bx-right-arrow-alt'></i></a>
+      </div>
+
+      <div class="service-card reveal">
+        <i class='bx bx-brain service-icon'></i>
+        <h2>AI &amp; ML Solutions</h2>
+        <p>Custom machine learning models, Generative AI integrations, RAG pipelines, and intelligent automation. I turn your data into actionable insights using TensorFlow, scikit-learn, and LLMs.</p>
+        <a href="#contact" class="read">Get Started <i class='bx bx-right-arrow-alt'></i></a>
+      </div>
+
+      <div class="service-card reveal">
+        <i class='bx bx-palette service-icon'></i>
+        <h2>UI/UX Design</h2>
+        <p>Intuitive, visually stunning interfaces that enhance user experience. From wireframes to pixel-perfect prototypes, I ensure every interaction feels seamless and purposeful.</p>
+        <a href="#contact" class="read">Get Started <i class='bx bx-right-arrow-alt'></i></a>
+      </div>
+
+      <div class="service-card reveal">
+        <i class='bx bx-bot service-icon'></i>
+        <h2>Generative AI Integration</h2>
+        <p>Integrate powerful LLMs (Gemini, GPT) into your products. AI chatbots, resume analyzers, study plan generators, and content pipelines — all connected to your existing infrastructure.</p>
+        <a href="#contact" class="read">Get Started <i class='bx bx-right-arrow-alt'></i></a>
+      </div>
+
+      <div class="service-card reveal">
+        <i class='bx bx-data service-icon'></i>
+        <h2>Database &amp; API Design</h2>
+        <p>Efficient database architecture with MongoDB and PostgreSQL. RESTful and async API development with FastAPI and Express.js. Optimized for scale, security, and performance.</p>
+        <a href="#contact" class="read">Get Started <i class='bx bx-right-arrow-alt'></i></a>
+      </div>
+
+      <div class="service-card reveal">
+        <i class='bx bx-line-chart service-icon'></i>
+        <h2>Data Analysis &amp; Visualization</h2>
+        <p>Transform raw datasets into insights with Python, Pandas, and Streamlit. Interactive dashboards, statistical analysis, and predictive models that help you make data-driven decisions.</p>
+        <a href="#contact" class="read">Get Started <i class='bx bx-right-arrow-alt'></i></a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════
+       SECTION 8 — CONTACT
+  ════════════════════════════════════ -->
+  <section class="contact-section" id="contact">
+    <div class="section-header reveal">
+      <h1>Get In <span>Touch</span></h1>
+      <div class="section-divider"></div>
+      <p>Open to opportunities, collaborations and tech conversations</p>
+    </div>
+
+    <div class="contact reveal">
+      <div class="contact-text">
+        <h2>Let's Work <span>Together</span></h2>
+        <h4>Always Open to Connect!</h4>
+        <p>Feel free to reach out for collaborations, freelance projects, internship inquiries, or just a friendly tech chat. I'm always happy to connect!</p>
+        <ul class="contact-list">
+          <li><i class='bx bxs-envelope'></i> <a href="mailto:ashikasunder.offl@gmail.com">ashikasunder.offl@gmail.com</a></li>
+          <li><i class='bx bxs-phone'></i> <a href="tel:+919345617805">+91 9345617805</a></li>
+          <li><i class='bx bxl-linkedin-square'></i> <a href="https://www.linkedin.com/in/ashika-sunder-356177259/" target="_blank">linkedin.com/in/ashika-sunder</a></li>
+          <li><i class='bx bxl-github'></i> <a href="https://github.com/AshikaSunder-2004" target="_blank">github.com/AshikaSunder-2004</a></li>
+        </ul>
+        <div class="contact-icons">
+          <a href="https://www.linkedin.com/in/ashika-sunder-356177259/" target="_blank" title="LinkedIn"><i class='bx bxl-linkedin'></i></a>
+          <a href="https://github.com/AshikaSunder-2004" target="_blank" title="GitHub"><i class='bx bxl-github'></i></a>
+          <a href="mailto:ashikasunder.offl@gmail.com" title="Email"><i class='bx bxl-gmail'></i></a>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <form action="">
+          <input type="text" id="contact-name" placeholder="Your Name" required/>
+          <input type="email" id="contact-email" placeholder="Your Email" required/>
+          <input type="text" id="contact-subject" placeholder="Subject"/>
+          <textarea id="contact-msg" rows="7" placeholder="Your Message" required></textarea>
+          <input type="submit" value="Send Message" class="send" id="send-btn"/>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════ -->
+  <footer class="site-footer">
+    <nav class="footer-nav">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#certifications">Certifications</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="footer-socials">
+      <a href="https://www.linkedin.com/in/ashika-sunder-356177259/" target="_blank" title="LinkedIn"><i class='bx bxl-linkedin'></i></a>
+      <a href="https://github.com/AshikaSunder-2004" target="_blank" title="GitHub"><i class='bx bxl-github'></i></a>
+      <a href="mailto:ashikasunder.offl@gmail.com" title="Email"><i class='bx bxl-gmail'></i></a>
+    </div>
+    <p class="footer-copy">
+      <i class='bx bxs-heart'></i> Developed by Ashika Sunder &copy; 2026
+    </p>
+  </footer>
+
+  <a href="#home" class="top" id="back-to-top"><i class='bx bx-up-arrow-alt'></i></a>
+
+  <!-- ═══════════════════════════════════════════
+       SCRIPTS
+  ═══════════════════════════════════════════ -->
   <script>
-    var typed = new Typed(".text", {
-      strings: ["Full-Stack Developer", "AI & ML Engineer", "Software Developer Intern", "Gen AI Enthusiast"],
-      typeSpeed: 80,
-      backSpeed: 60,
-      backDelay: 1500,
-      loop: true
+  /* ─── Typed.js ─── */
+  var typed = new Typed(".text", {
+    strings: ["Full-Stack Developer", "AI & ML Engineer", "Software Developer Intern", "Gen AI Enthusiast"],
+    typeSpeed: 80, backSpeed: 60, backDelay: 1500, loop: true
+  });
+
+  /* ─── Three.js Particle Network ─── */
+  (() => {
+    const canvas = document.getElementById('three-bg');
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera.position.z = 6;
+
+    // Particles
+    const count = 350;
+    const pos = new Float32Array(count * 3);
+    for (let i = 0; i < count * 3; i++) pos[i] = (Math.random() - 0.5) * 18;
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    scene.add(new THREE.Points(geo, new THREE.PointsMaterial({ color: 0x0ef, size: 0.055, transparent: true, opacity: 0.5 })));
+
+    // Edges
+    const pts = [];
+    for (let i = 0; i < count; i++) {
+      for (let j = i + 1; j < count; j++) {
+        const dx = pos[i*3] - pos[j*3], dy = pos[i*3+1] - pos[j*3+1], dz = pos[i*3+2] - pos[j*3+2];
+        if (Math.sqrt(dx*dx + dy*dy + dz*dz) < 2.5) {
+          pts.push(new THREE.Vector3(pos[i*3], pos[i*3+1], pos[i*3+2]));
+          pts.push(new THREE.Vector3(pos[j*3], pos[j*3+1], pos[j*3+2]));
+        }
+      }
+    }
+    if (pts.length) {
+      scene.add(new THREE.LineSegments(
+        new THREE.BufferGeometry().setFromPoints(pts),
+        new THREE.LineBasicMaterial({ color: 0x8a2be2, transparent: true, opacity: 0.12 })
+      ));
+    }
+
+    let mx = 0, my = 0;
+    window.addEventListener('mousemove', e => {
+      mx = (e.clientX / window.innerWidth  - 0.5) * 0.5;
+      my = (e.clientY / window.innerHeight - 0.5) * 0.5;
     });
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+    (function animate() {
+      requestAnimationFrame(animate);
+      scene.rotation.y += 0.0006;
+      scene.rotation.x += 0.0002;
+      camera.position.x += (mx - camera.position.x) * 0.025;
+      camera.position.y += (-my - camera.position.y) * 0.025;
+      renderer.render(scene, camera);
+    })();
+  })();
+
+  /* ─── 3D Card Tilt ─── */
+  document.querySelectorAll('.project-card, .service-card, .cert-card, .exp-card, .hack-card, .achievement-card, .edu-card').forEach(card => {
+    card.style.transformStyle = 'preserve-3d';
+    card.style.transition = 'transform 0.15s ease, box-shadow 0.3s ease';
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width  - 0.5;
+      const y = (e.clientY - r.top)  / r.height - 0.5;
+      card.style.transform = `rotateY(${x * 12}deg) rotateX(${-y * 8}deg) translateZ(8px)`;
+      card.style.boxShadow = `${-x*18}px ${-y*18}px 50px rgba(14,239,255,0.15)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'rotateY(0deg) rotateX(0deg) translateZ(0)';
+      card.style.boxShadow = '';
+    });
+  });
+
+  /* ─── Project Filter ─── */
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const projectCards = document.querySelectorAll('.project-card');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      projectCards.forEach(card => {
+        const show = f === 'all' || card.dataset.category === f;
+        card.style.transition = 'opacity 0.35s, transform 0.35s';
+        card.style.opacity    = show ? '1' : '0.12';
+        card.style.pointerEvents = show ? '' : 'none';
+        card.style.transform  = show ? '' : 'scale(0.95)';
+      });
+    });
+  });
+
+  /* ─── Scroll Reveal ─── */
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+
+  /* ─── Active nav on scroll ─── */
+  const sections = document.querySelectorAll('section[id], .education-section[id]');
+  const navLinks = document.querySelectorAll('.navbar a[data-section]');
+  const scrollSpy = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(a => a.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.navbar a[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  document.querySelectorAll('section[id]').forEach(s => scrollSpy.observe(s));
+
+  /* ─── Back to top button ─── */
+  const btt = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => { btt.style.opacity = window.scrollY > 400 ? '1' : '0'; });
+
+  /* ─── Hamburger menu ─── */
+  const hamburger = document.getElementById('hamburger');
+  const nav = document.getElementById('main-nav');
+  hamburger.addEventListener('click', () => nav.classList.toggle('open'));
+
+  /* ─── Smooth scroll for anchor links ─── */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); nav.classList.remove('open'); }
+    });
+  });
   </script>
 </body>
 </html>
